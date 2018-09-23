@@ -21,7 +21,16 @@ One time installation of all dependencies via [npm](https://npmjs.org):
 ```
 npm install
 ```
+npm install bpmn-js
+```
+git fetch --all
+```
+git reset --hard origin/master
+```
+git pull
+```
 
+本文来自 童明Kevin 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/tmtongming/article/details/73178997?utm_source=copy 
 
 Building the app into the `dist` directory and opening it in a browser:
 
