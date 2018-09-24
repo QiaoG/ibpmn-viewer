@@ -14,7 +14,7 @@ var viewer = new BpmnViewer({
 });
 
 function formatXML(xml) {
-  var fil = [/<bpmn2:extensionElements>\n/m,/<\/bpmn2:extensionElements>\n/m,/<activiti:taskListener\s+event="create"\s+class="com\.iwork\.process\.management\.listener\.RuntimeAssigneeListener"\/>\n/m];
+  var fil = [/<bpmn2:extensionElements>\n?/m,/<\/bpmn2:extensionElements>\n?/m,/<activiti:taskListener\s+event="create"\s+class="com\.iwork\.process\.management\.listener\.RuntimeAssigneeListener"\/>\n?/m];
   for(var i = 0; i < fil.length; i++){
     xml = xml.replace(fil[i],'');
   }
