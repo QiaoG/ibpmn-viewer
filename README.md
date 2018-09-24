@@ -21,19 +21,6 @@ One time installation of all dependencies via [npm](https://npmjs.org):
 ```
 npm install
 ```
-```
-npm install bpmn-js
-```
-```
-git fetch --all
-```
-```
-git reset --hard origin/master
-```
-```
-git pull
-```
-
 Building the app into the `dist` directory and opening it in a browser:
 
 ```
