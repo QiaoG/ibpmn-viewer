@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process  id="YZSQLC" name="证照申请流程" isExecutable="false">
+        <bpmn2:startEvent  id="startevent1" name="开始" >
+        </bpmn2:startEvent>
+        <bpmn2:endEvent  id="endevent10" name="结束">
+        </bpmn2:endEvent>
+        <bpmn2:userTask  id="usertask2" name="填写申请单" >
+            <bpmn2:extensionElements>
+                <activiti:taskListener event="create" class="com.iwork.process.management.listener.RuntimeAssigneeListener"/>
+            </bpmn2:extensionElements>
+        </bpmn2:userTask>
+        <bpmn2:userTask  id="usertask3" name="部门负责人审批" >
+            <extensionElements>
+                <activiti:taskListener event="create" class="com.iwork.process.management.listener.RuntimeAssigneeListener"/>
+            </extensionElements>
+        </bpmn2:userTask>
+        <bpmn2:userTask  id="usertask5" name="印章管理员确认" >
+            <extensionElements>
+                <activiti:taskListener event="create" class="com.iwork.process.management.listener.RuntimeAssigneeListener"/>
+            </extensionElements>
+        </bpmn2:userTask>
+        <bpmn2:userTask  id="usertask8" name="申请人确认" >
+            <extensionElements>
+                <activiti:taskListener event="create" class="com.iwork.process.management.listener.RuntimeAssigneeListener"/>
+            </extensionElements>
+        </bpmn2:userTask>
+        <bpmn2:sequenceFlow  id="flow12" name="flow12" sourceRef="startevent1" targetRef="usertask2">
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow  id="flow4" name="flow4" sourceRef="usertask2" targetRef="usertask3">
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow  id="flow6" name="flow6" sourceRef="usertask3" targetRef="usertask5">
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow  id="flow9" name="flow9" sourceRef="usertask5" targetRef="usertask8">
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow  id="flow11" name="" sourceRef="usertask8" targetRef="endevent10">
+        </bpmn2:sequenceFlow>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_YZSQLC">
+        <bpmndi:BPMNPlane bpmnElement="YZSQLC" id="BPMNPlane_YZSQLC">
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+                <dc:Bounds height="30" width="30" x="130" y="129"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent10" id="BPMNShape_endevent10">
+                <dc:Bounds height="30" width="30" x="136" y="237"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+                <dc:Bounds height="60" width="130" x="221" y="114"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask3" id="BPMNShape_usertask3">
+                <dc:Bounds height="60" width="130" x="412" y="114"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask5" id="BPMNShape_usertask5">
+                <dc:Bounds height="60" width="130" x="420" y="222"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
+                <dc:Bounds height="60" width="130" x="224" y="222"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+                <di:waypoint x="160" y="144"/>
+                <di:waypoint x="216" y="144"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+                <di:waypoint x="356" y="144"/>
+                <di:waypoint x="407" y="144"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+                <di:waypoint x="547" y="144"/>
+                <di:waypoint x="555" y="252"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+                <di:waypoint x="415" y="252"/>
+                <di:waypoint x="359" y="252"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+                <di:waypoint x="219" y="252"/>
+                <di:waypoint x="166" y="252"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
+
+

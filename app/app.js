@@ -114,9 +114,9 @@ $file.on('change', function() {
 
 
 // we use stringify to inline a simple BPMN diagram
-import pizzaDiagram from '../resources/diagram-spl.bpmn';//pizza-collaboration-annotated.bpmn';
+import pizzaDiagram from '../resources/example10-13.bpmn';//pizza-collaboration-annotated.bpmn';
 var xml = formatXML(pizzaDiagram);
-openDiagram(xml);
+openDiagram(pizzaDiagram);
 
 
 // file drag / drop ///////////////////////
