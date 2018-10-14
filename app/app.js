@@ -4,7 +4,6 @@ import $ from 'jquery';
 // require the viewer, make sure you added it to your project
 // dependencies via npm install --save-dev bpmn-js
 import BpmnViewer from 'bpmn-js/lib/NavigatedViewer';
-//import BpmnViewer from 'bpmn-js/lib/Modeler';
 
 import EmbeddedComments from 'bpmn-js-embedded-comments';
 
@@ -13,13 +12,32 @@ var viewer = new BpmnViewer({
   additionalModules: []
 });
 
-function formatXML(xml) {
-  var fil = [/<bpmn2:extensionElements>\n?/m,/<\/bpmn2:extensionElements>\n?/m,/<activiti:taskListener\s+event="create"\s+class="com\.iwork\.process\.management\.listener\.RuntimeAssigneeListener"\/>\n?/m];
-  for(var i = 0; i < fil.length; i++){
-    xml = xml.replace(fil[i],'');
+// function formatXML(xml) {
+//   var fil = [/<bpmn2:extensionElements>\n?/m,/<\/bpmn2:extensionElements>\n?/m,/<activiti:taskListener\s+event="create"\s+class="com\.iwork\.process\.management\.listener\.RuntimeAssigneeListener"\/>\n?/m];
+//   for(var i = 0; i < fil.length; i++){
+//     xml = xml.replace(fil[i],'');
+//   }
+//   return xml;
+// }
+
+var elementRegistry = modeler.get('elementRegistry');
+var modeling = modeler.get('modeling');
+
+//适配老设计器生成的bpmn文件（xml）
+function adaptBpmn() {
+  console.info("适配老版本xml");
+  var eles = elementRegistry.filter(function (element, gfx) {
+    return element.type === "bpmn:SequenceFlow";
+  });
+  //modeling.removeElements(eles);
+  var s, t, p;
+  for(var i = 0; i < eles.length; i++){
+    s = eles[i].source;
+    t = eles[i].target;
+    p = eles[i].parent;
+    modeling.removeElements([eles[i]]);
+    modeling.connect(s,t,undefined,p);
   }
-  // console.info(xml);
-  return xml;
 }
 
 
@@ -34,7 +52,9 @@ function openDiagram(diagram) {
       alert('could not import BPMN 2.0 XML, see console');
       return console.log('could not import BPMN 2.0 XML', err);
     }
-
+    if(diagram.indexOf('xmlns:bpmn2') < 0) {//老版载入
+      adaptBpmn();
+    }
     console.log('success!');
     viewer.get('canvas').zoom('fit-viewport');
     var elementToColor = elementRegistry.get('UserTask_1rie7j9');
@@ -80,91 +100,8 @@ viewer.on('canvas.click', function() {
 });
 
 
-// file open handling
-
-var $file = $('[data-open-file]');
-
-function readFile(file, done) {
-
-  if (!file) {
-    return done(new Error('no file chosen'));
-  }
-
-  var reader = new FileReader();
-
-  reader.onload = function(e) {
-    done(null, e.target.result);
-  };
-
-  reader.readAsText(file);
-}
-
-$file.on('change', function() {
-  readFile(this.files[0], function(err, xml) {
-
-    if (err) {
-      alert('could not read file, see console');
-      return console.error('could not read file', err);
-    }
-
-    openDiagram(xml);
-  });
-
-});
-
 
 // we use stringify to inline a simple BPMN diagram
-import pizzaDiagram from '../resources/example10-13.bpmn';//pizza-collaboration-annotated.bpmn';
-var xml = formatXML(pizzaDiagram);
-openDiagram(pizzaDiagram);
+import xml from '../resources/lixiang.bpmn';//pizza-collaboration-annotated.bpmn';
+openDiagram(xml);
 
-
-// file drag / drop ///////////////////////
-
-function openFile(file, callback) {
-
-  // check file api availability
-  if (!window.FileReader) {
-    return window.alert(
-      'Looks like you use an older browser that does not support drag and drop. ' +
-      'Try using a modern browser such as Chrome, Firefox or Internet Explorer > 10.');
-  }
-
-  // no file chosen
-  if (!file) {
-    return;
-  }
-
-  var reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    var xml = e.target.result;
-
-    callback(xml);
-  };
-
-  reader.readAsText(file);
-}
-
-(function onFileDrop(container, callback) {
-
-  function handleFileSelect(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    var files = e.dataTransfer.files;
-    openFile(files[0], callback);
-  }
-
-  function handleDragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
-
-  container.get(0).addEventListener('dragover', handleDragOver, false);
-  container.get(0).addEventListener('drop', handleFileSelect, false);
-
-})($('body'), openDiagram);
