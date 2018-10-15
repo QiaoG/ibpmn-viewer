@@ -5,9 +5,11 @@ import $ from 'jquery';
 // dependencies via npm install --save-dev bpmn-js
 import BpmnViewer from 'bpmn-js/lib/NavigatedViewer';
 
+import BpmnModeler from 'bpmn-js/lib/Modeler';
+
 import EmbeddedComments from 'bpmn-js-embedded-comments';
 
-var viewer = new BpmnViewer({
+var viewer = new BpmnModeler({
   container: '#canvas',
   additionalModules: []
 });
@@ -20,8 +22,8 @@ var viewer = new BpmnViewer({
 //   return xml;
 // }
 
-var elementRegistry = modeler.get('elementRegistry');
-var modeling = modeler.get('modeling');
+var elementRegistry = viewer.get('elementRegistry');
+var modeling = viewer.get('modeling');
 
 //适配老设计器生成的bpmn文件（xml）
 function adaptBpmn() {
@@ -29,7 +31,7 @@ function adaptBpmn() {
   var eles = elementRegistry.filter(function (element, gfx) {
     return element.type === "bpmn:SequenceFlow";
   });
-  //modeling.removeElements(eles);
+  console.info(eles);
   var s, t, p;
   for(var i = 0; i < eles.length; i++){
     s = eles[i].source;
@@ -43,12 +45,11 @@ function adaptBpmn() {
 
 function openDiagram(diagram) {
 
-  var elementRegistry = viewer.get('elementRegistry'),
-    modeling = viewer.get('modeling');
+  // var elementRegistry = viewer.get('elementRegistry'),
+  //   modeling = viewer.get('modeling');
 
   viewer.importXML(diagram, function(err) {
     if (err) {
-
       alert('could not import BPMN 2.0 XML, see console');
       return console.log('could not import BPMN 2.0 XML', err);
     }
@@ -57,7 +58,7 @@ function openDiagram(diagram) {
     }
     console.log('success!');
     viewer.get('canvas').zoom('fit-viewport');
-    var elementToColor = elementRegistry.get('UserTask_1rie7j9');
+    var elementToColor = elementRegistry.get('step_be61e1b1-a9a5-1c15-3256-322e28906099');
     if(elementToColor){
       modeling.setColor([ elementToColor ], {
         stroke: 'green',
