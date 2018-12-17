@@ -1,7 +1,7 @@
 node_modules/*/
 !node_modules/bpmn-js/
-dist/**/*
-dist/*
+#dist/**/*
+#dist/*
 node_modules/bpmn-js/dist/*
 !node_modules/bpmn-js/dist/assets/
 tmp/
