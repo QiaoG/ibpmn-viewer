@@ -53,7 +53,9 @@ function openDiagram(diagram) {
       alert('could not import BPMN 2.0 XML, see console');
       return console.log('could not import BPMN 2.0 XML', err);
     }
-    if(diagram.indexOf('xmlns:bpmn2') < 0) {//老版载入
+    var index = diagram.indexOf('xmlns:bpmn2');
+    console.log("xmlns:bpmn2 index="+index);
+    if(index < 0) {//老版载入
       adaptBpmn();
     }
     console.log('success!');
@@ -103,6 +105,6 @@ viewer.on('canvas.click', function() {
 
 
 // we use stringify to inline a simple BPMN diagram
-import xml from '../resources/lixiang.bpmn';//pizza-collaboration-annotated.bpmn';
+import xml from '../resources/rr.bpmn';//pizza-collaboration-annotated.bpmn';
 openDiagram(xml);
 
