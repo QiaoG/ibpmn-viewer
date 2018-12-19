@@ -59,7 +59,7 @@ function openDiagram(diagram) {
       adaptBpmn();
     }
     console.log('success!');
-    //viewer.get('canvas').zoom('fit-viewport');
+    viewer.get('canvas').zoom('fit-viewport');
     var elementToColor = elementRegistry.get('step_be61e1b1-a9a5-1c15-3256-322e28906099');
     if(elementToColor){
       modeling.setColor([ elementToColor ], {
